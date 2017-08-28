@@ -25,13 +25,12 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     Elements elements;
-    static public ArrayList<String> titleList=new ArrayList<String>();
-    static public ArrayList<LatLng> latLngs=new ArrayList<>();
-    static public int position;
-    static public ArrayList<String> magnitude=new ArrayList<>();
-    static public ArrayList<String> depth=new ArrayList<>();
-    static public ArrayList<String> time=new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter = null;
+    private ArrayList<String> titleList=new ArrayList<String>();
+    private ArrayList<LatLng> latLngs=new ArrayList<>();
+    private ArrayList<String> magnitude=new ArrayList<>();
+    private ArrayList<String> depth=new ArrayList<>();
+    private ArrayList<String> time=new ArrayList<>();
+    private ArrayAdapter<String> arrayAdapter = null;
     private ListView listView;
 
     @Override
@@ -51,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                MainActivity.position = position;
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("latitude",latLngs.get(position).latitude);
+                intent.putExtra("longitude",latLngs.get(position).longitude);
+                intent.putExtra("title",titleList.get(position));
                 startActivity(intent);
             }
         });

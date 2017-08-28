@@ -1,8 +1,10 @@
 package ru.startandroid.earthquakemonitor;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,14 +45,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng latLng = MainActivity.latLngs.get(MainActivity.position);
-        MarkerOptions markerOptions=new MarkerOptions()
+        Intent intent = getIntent();
+        String title=intent.getStringExtra("title");
+        Double lat = intent.getExtras().getDouble("latitude");
+        Double lng = intent.getExtras().getDouble("longitude");
+        LatLng latLng= new LatLng(lat,lng);
+        MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
-                .title(MainActivity.titleList.get(MainActivity.position))
-                .anchor((float)0.5,(float)1)
-                .snippet("Время: "+ MainActivity.time.get(MainActivity.position));
-
-                //.icon(BitmapDescriptorFactory.fromFile("marker"));
+                .title(title)
+                .anchor((float) 0.5, (float) 0.5);
+                //.snippet("Время: " + MainActivity.time.get(MainActivity.position));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
